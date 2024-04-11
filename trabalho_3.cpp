@@ -756,7 +756,12 @@ priority_queue<TVSeries> UserManagement::queueTVSeries(list<TVSeries*> listTV,in
 {
     list<TVSeries*> rogerio = listTV;
     priority_queue <TVSeries> alex;
-    
+
+    if(min <= 0) return alex;
+    for(auto serie : rogerio)
+    {
+        if(serie == nullptr) return alex;
+    }
     while(!rogerio.empty())
     {
         int persona = 0;
