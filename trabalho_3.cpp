@@ -754,8 +754,35 @@ priority_queue<TVSeries> UserManagement::queueTVSeriesCategory(priority_queue<TV
 
 priority_queue<TVSeries> UserManagement::queueTVSeries(list<TVSeries*> listTV,int min)
 {
-    priority_queue<TVSeries> q;
-    return q;
+    list<TVSeries*> rogerio = listTV;
+    priority_queue <TVSeries> alex;
+    
+    while(!rogerio.empty())
+    {
+        int persona = 0;
+        for(auto Ishigod = vectorUsers.begin(); Ishigod != vectorUsers.end(); Ishigod++)
+        {
+            auto chika = ((*Ishigod)->getWatchedSeries());
+            for(size_t i = 0; i < chika.size(); i++)
+            {
+            
+                    if( chika[i]->getTitle() == rogerio.front()->getTitle())
+                    {
+                        if((*Ishigod)->getEpisodesWatched()[i] >= 2)
+                        {
+                            persona++;
+                        }
+                    }
+            }
+        }
+        if(persona >= min)
+        {
+            alex.push(*rogerio.front());
+        }
+        rogerio.pop_front();
+    }
+    return alex;
+    //answer here
 }
 
 
