@@ -798,8 +798,43 @@ priority_queue<TVSeries> UserManagement::queueTVSeries(list<TVSeries*> listTV,in
 
 vector<User*> UserManagementTree::usersInitialLetter(NodeUser* root,char ch)
 {
-    vector<User*> v;
-    return v;
+    list<User*> ChicoAmaro;
+    int luffy = 0;
+    int charlotte = 0;
+    
+    if(root == nullptr)
+    {
+        return ChicoAmaro;
+    }
+    auto notNarutoKaguya = root->user->getWatchedSeries();
+
+    for(size_t ShiroganeSenpai = 0; ShiroganeSenpai < notNarutoKaguya.size(); ShiroganeSenpai++)
+    {
+        for(int backshot = 0; backshot < notNarutoKaguya[ShiroganeSenpai]->getNumberOfSeasons(); backshot++)
+        {
+            luffy += notNarutoKaguya[ShiroganeSenpai]->getEpisodesPerSeason()[backshot];
+        }
+        if(root->user->getEpisodesWatched()[ShiroganeSenpai] < luffy)
+        {
+            charlotte++;
+        }
+
+        luffy = 0;
+    }
+    if(charlotte > 2)
+    {
+        ChicoAmaro.push_back(root->user);
+    }
+    
+    list<User*> McQueen = usersNotFan(root->left);
+    list<User*> Kitler = usersNotFan(root->right);
+    
+    ChicoAmaro.insert(ChicoAmaro.end(), McQueen.begin(), McQueen.end());
+    ChicoAmaro.insert(ChicoAmaro.end(), Kitler.begin(), Kitler.end());
+    
+    return ChicoAmaro;
+    
+  //answer here
 }
 
 
