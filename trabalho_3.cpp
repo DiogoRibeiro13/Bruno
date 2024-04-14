@@ -845,8 +845,43 @@ vector<User*> UserManagementTree::usersInitialLetter(NodeUser* root,char ch)
 
 list<User*> UserManagementTree::usersNotFan(NodeUser* root)
 {
-    list<User*> lt;
-    return lt;
+    list<User*> ChicoAmaro;
+    int luffy = 0;
+    int charlotte = 0;
+    
+    if(root == nullptr)
+    {
+        return ChicoAmaro;
+    }
+    auto notNarutoKaguya = root->user->getWatchedSeries();
+
+    for(size_t ShiroganeSenpai = 0; ShiroganeSenpai < notNarutoKaguya.size(); ShiroganeSenpai++)
+    {
+        for(int backshot = 0; backshot < notNarutoKaguya[ShiroganeSenpai]->getNumberOfSeasons(); backshot++)
+        {
+            luffy += notNarutoKaguya[ShiroganeSenpai]->getEpisodesPerSeason()[backshot];
+        }
+        if(root->user->getEpisodesWatched()[ShiroganeSenpai] < luffy)
+        {
+            charlotte++;
+        }
+
+        luffy = 0;
+    }
+    if(charlotte > 2)
+    {
+        ChicoAmaro.push_back(root->user);
+    }
+    
+    list<User*> McQueen = usersNotFan(root->left);
+    list<User*> Kitler = usersNotFan(root->right);
+    
+    ChicoAmaro.insert(ChicoAmaro.end(), McQueen.begin(), McQueen.end());
+    ChicoAmaro.insert(ChicoAmaro.end(), Kitler.begin(), Kitler.end());
+    
+    return ChicoAmaro;
+    
+  //answer here
 }
 
 
@@ -857,6 +892,96 @@ list<User*> UserManagementTree::usersNotFan(NodeUser* root)
 
 vector<int> UserManagementTree::usersCategoryStatistics(NodeUser* root,string cat,int perc)
 {
-   vector<int> v;
-   return v;
+    vector<int> sandro{0,0,0};
+    //vector<int> usopp{6,4,1};
+    vector<int> usopp;
+    int jesus = 0, maria = 0, jose = 0, roberto = 0, backbending = 0;
+    bool trustMeBro = false, frizeLimao = false, panoDeLimparOPo = false, ValidCat = false;
+    
+    if( root == nullptr || perc <= 0 || perc > 100 )
+    {
+        return sandro;
+    }
+    
+    auto deusComMaiuscula = root->user->getWatchedSeries();
+    auto aguaDeSaoMartinho = root->user->getFavoriteGenres();
+    auto barbie = root->user->getEpisodesWatched();
+    
+    for(int i=0; i < (N_GENRES-1); i++)
+    {
+        //Verifica se o género "cat" corresponde a algum dos géneros existentes
+        if(cat == vGenres[i])
+        {
+            //Caso corresponda então é um género válido e "ValidCat" passa a ter valor "true"
+            ValidCat = true;
+        }
+    }
+    if(ValidCat == false)
+    {
+        return sandro; //Notar que ainda não foi adicionado qualquer elemento à lista 
+    }
+    
+    for(size_t alpha = 0; alpha < deusComMaiuscula.size(); alpha++)
+    {
+        if(deusComMaiuscula[alpha]->getGenre() == cat)
+        {
+            panoDeLimparOPo = true;
+            
+            for(int sokka = 0; sokka < deusComMaiuscula[alpha]->getNumberOfSeasons(); sokka++)
+            {
+                backbending += deusComMaiuscula[alpha]->getEpisodesPerSeason()[sokka];
+            }
+            
+            roberto = ((backbending * perc)/100);
+            backbending = 0;
+            if(barbie[alpha] >= roberto)
+            {
+                frizeLimao = true;
+                for(size_t ishowthemeat = 0; ishowthemeat < aguaDeSaoMartinho.size(); ishowthemeat++)
+                {
+                    if(aguaDeSaoMartinho[ishowthemeat] == cat)
+                    {
+                        trustMeBro = true;
+                    }
+                }
+            }
+        }
+    }
+    if(panoDeLimparOPo == true) jesus++;
+    
+    if(frizeLimao == true) maria++;
+    
+    if(trustMeBro == true) jose++;
+
+    
+    usopp.push_back(jesus);
+    usopp.push_back(maria);
+    usopp.push_back(jose);
+    
+
+    vector<int> maisUmCromossoma = usersCategoryStatistics(root->left, cat, perc); 
+    
+    if(maisUmCromossoma != sandro)
+    {
+        usopp[0] += maisUmCromossoma[0];                          
+        usopp[1] += maisUmCromossoma[1];
+        usopp[2] += maisUmCromossoma[2];
+    }
+    
+    vector<int> menosUmCromossoma = usersCategoryStatistics(root->right, cat, perc);
+    
+    if(menosUmCromossoma != sandro)
+    {
+        usopp[0] += menosUmCromossoma[0];                          
+        usopp[1] += menosUmCromossoma[1];
+        usopp[2] += menosUmCromossoma[2];
+    }
+    
+    //usopp.push_back(jesus);
+    //usopp.push_back(maria);
+    //usopp.push_back(jose);
+    
+    
+    return usopp;
+  //answer here
 }
