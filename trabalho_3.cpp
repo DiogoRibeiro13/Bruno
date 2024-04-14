@@ -798,41 +798,32 @@ priority_queue<TVSeries> UserManagement::queueTVSeries(list<TVSeries*> listTV,in
 
 vector<User*> UserManagementTree::usersInitialLetter(NodeUser* root,char ch)
 {
-    list<User*> ChicoAmaro;
-    int luffy = 0;
-    int charlotte = 0;
+    vector<User*> UserLet;
     
     if(root == nullptr)
     {
-        return ChicoAmaro;
+        return UserLet;
     }
-    auto notNarutoKaguya = root->user->getWatchedSeries();
-
-    for(size_t ShiroganeSenpai = 0; ShiroganeSenpai < notNarutoKaguya.size(); ShiroganeSenpai++)
+    
+    if((ch < 65 || ch > 90) && (ch < 97 || ch > 122))
     {
-        for(int backshot = 0; backshot < notNarutoKaguya[ShiroganeSenpai]->getNumberOfSeasons(); backshot++)
-        {
-            luffy += notNarutoKaguya[ShiroganeSenpai]->getEpisodesPerSeason()[backshot];
-        }
-        if(root->user->getEpisodesWatched()[ShiroganeSenpai] < luffy)
-        {
-            charlotte++;
-        }
+        return UserLet;
+    }
 
-        luffy = 0;
-    }
-    if(charlotte > 2)
+    if(root->user->getUsername()[0] == ch || root->user->getUsername()[0] == (ch + 32) || root->user->getUsername()[0] == (ch - 32))
     {
-        ChicoAmaro.push_back(root->user);
+        UserLet.push_back(root->user);
     }
+
+    vector<User*> KarlMarx = usersInitialLetter(root->left, ch);
+    vector<User*> Adolfo = usersInitialLetter(root->right, ch);
     
-    list<User*> McQueen = usersNotFan(root->left);
-    list<User*> Kitler = usersNotFan(root->right);
-    
-    ChicoAmaro.insert(ChicoAmaro.end(), McQueen.begin(), McQueen.end());
-    ChicoAmaro.insert(ChicoAmaro.end(), Kitler.begin(), Kitler.end());
-    
-    return ChicoAmaro;
+    UserLet.insert(UserLet.end(), KarlMarx.begin(), KarlMarx.end());
+    UserLet.insert(UserLet.end(), Adolfo.begin(), Adolfo.end());
+
+
+    return UserLet;
+  //answer here
     
   //answer here
 }
