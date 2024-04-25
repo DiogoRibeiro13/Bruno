@@ -1160,43 +1160,46 @@ struct CompareP {
 
 vector<User*> UserManagementGraph::mostFollowing()
 {
-    vector<User*> ReturnVec;
-    int NumFollow = 0, Record = 0;
+    vector<User*> PowerGuido;
+    size_t Seixo = 0, Paulo = 0;
     
-
     if(userNodes.empty() || totalUsers <= 0)
     {
-        return ReturnVec;
+        return PowerGuido;
     }
     
-
-    for(auto UserPos = userNodes.begin(); UserPos != userNodes.end(); UserPos++)
+    for(auto JacintoPinto = userNodes.begin(); JacintoPinto != userNodes.end(); JacintoPinto++)
     {
-        NumFollow = network[userNodePosition(*UserPos)].size();
+        auto JacintoLeite = *JacintoPinto;
+        auto CucaBeludo = network[userNodePosition(JacintoLeite)];
+        
+        Seixo = CucaBeludo.size();
         
 
-        if(NumFollow > Record)
+        
+        if(Seixo > Paulo)
         {
-            while(!ReturnVec.empty())
+            while(!PowerGuido.empty())
             {
-                ReturnVec.pop_back();
+                
+                PowerGuido.pop_back();
+
             }
             
-            ReturnVec.push_back(*UserPos);
-            Record = NumFollow;
+            PowerGuido.push_back(JacintoLeite);
+            Paulo = Seixo;
+            
         }
         
-        
-        else if(NumFollow == Record)
-        {
-            ReturnVec.push_back(*UserPos);
-        }    
+        else if(Seixo == Paulo )
+            {
+                PowerGuido.push_back(JacintoLeite);
+            }    
     }
     
-    return ReturnVec;
+    return PowerGuido;
     
-    //answer here
-    //Because there is no other option :)
+  //answer here
 }
 
 
