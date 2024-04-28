@@ -1213,9 +1213,72 @@ vector<User*> UserManagementGraph::mostFollowing()
 
 TVSeries* UserManagementGraph::followingMostWatchedSeries(User* userPtr)
 {
-    // question 2 
-    TVSeries* vMostViewed=nullptr;
-    return vMostViewed;
+    TVSeries* Anakin = nullptr;
+    vector<TVSeries*> juan;
+    vector<int> maximus, jimmy;
+    bool foundUser = false;
+    
+    // Verifica se o nó pertence ao grafo
+    for (size_t i = 0; i < userNodes.size(); i++)
+    {
+        if (userNodes[i] == userPtr)
+        {
+            foundUser = true;
+            break;
+        }
+    }
+    if (!foundUser)
+    {
+        return nullptr; // Retorna NULL se o nó não pertencer ao grafo
+    }
+    
+    // Obtém as séries assistidas pelos usuários que o usuário segue
+    for(auto brona = network[userNodePosition(userPtr)].begin(); brona != network[userNodePosition(userPtr)].end(); brona++)
+    {
+        auto user = *brona;
+        for(auto series : user->getWatchedSeries())
+        {
+            if(find(juan.begin(), juan.end(), series) == juan.end())
+            {
+                juan.push_back(series);
+                maximus.push_back(0); // Inicializa o vetor de episódios assistidos
+                jimmy.push_back(0); // Inicializa o vetor de contagem de usuários
+            }
+        }
+    }
+    
+    // Calcula o número total de episódios assistidos e o número de usuários para cada série
+    for(size_t i = 0; i < juan.size(); i++)
+    {
+        for(auto brona : network[userNodePosition(userPtr)])
+        {
+            auto userSeries = brona->getWatchedSeries();
+            auto it = find(userSeries.begin(), userSeries.end(), juan[i]);
+            if(it != userSeries.end())
+            {
+                size_t index = distance(userSeries.begin(), it);
+                maximus[i] += brona->getEpisodesWatched()[index];
+                jimmy[i]++;
+            }
+        }
+    }
+    
+    // Seleciona a série mais assistida de acordo com os critérios especificados
+    int milior = 0;
+    int Verstapen = 0;
+    for(size_t i = 0; i < juan.size(); i++)
+    {
+        if(maximus[i] > milior || (maximus[i] == milior && jimmy[i] > Verstapen))
+        {
+            milior = maximus[i];
+            Verstapen = jimmy[i];
+            Anakin = juan[i];
+        }
+    }
+    
+    return Anakin;
+    
+  //answer here
 }
 
 
